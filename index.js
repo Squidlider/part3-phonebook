@@ -6,10 +6,10 @@ require('dotenv').config()
 
 const Person = require('./models/contact')
 
+app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(express.static('build'))
-app.use(cors())
 
 morgan.token('custom', (req) => {
   return 'POST' === req.method ? JSON.stringify(req.body) : ' '
@@ -22,6 +22,12 @@ app.use(
 )
 
 let persons = []
+
+app.get('/api/persons', (req, res) => {
+  Person.find({}).then((persons) => {
+    response.json(persons)
+  })
+})
 
 app.get('/info', (req, res) => {
   const personCount = persons.length
@@ -94,12 +100,6 @@ app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter((person) => person.id !== id)
   response.status(204).end()
-})
-
-app.get('/api/persons', (req, res) => {
-  Person.find({}).then((person) => {
-    response.json(person)
-  })
 })
 
 const PORT = process.env.PORT || 3001
