@@ -23,7 +23,7 @@ app.use(
 
 let persons = []
 
-app.get('/api/persons', (req, res) => {
+app.get('/api/persons', (reuest, response) => {
   Person.find({}).then((persons) => {
     response.json(persons)
   })
