@@ -30,11 +30,13 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (req, res) => {
-  const personCount = persons.length
-  res.send(`
-  <p>Phonebook has info for ${personCount} people</p>
-  <p>${new Date()}</p>
-  `)
+  Person.find({}).then((persons) => {
+    const personCount = persons.length
+    res.send(`
+      <p>Phonebook has info for ${personCount} people</p>
+      <p>${new Date()}</p>
+    `)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
