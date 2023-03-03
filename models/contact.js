@@ -20,7 +20,17 @@ const contactSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  number: String,
+  number: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^\d{2,3}-\d{5,}$/.test(v)
+      },
+      message: (props) =>
+        `${props.value} ei ole kelvollinen puhelinnumero! Puhelinnumeron tulee olla muotoa XX-XXXXXXX tai XXX-XXXXXXX`,
+    },
+  },
 })
 
 contactSchema.set('toJSON', {
