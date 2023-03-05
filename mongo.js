@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-//  9y989d8PHcipDmGY
 
 if (process.argv.length < 3) {
   console.log('Password missing')
@@ -28,7 +27,7 @@ const contact = new Contact({
 })
 
 if (process.argv.length === 5) {
-  contact.save().then((result) => {
+  contact.save().then(() => {
     console.log(`Added ${name} number ${number} to phonebook`)
     mongoose.connection.close()
   })
